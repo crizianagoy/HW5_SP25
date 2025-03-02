@@ -1,6 +1,6 @@
 # region imports
 import numpy as np
-from scipy.integrate import #JES MISSING CODE
+from scipy.integrate import solve_ivp #JES MISSING CODE
 import matplotlib.pyplot as plt
 # endregion
 
@@ -30,30 +30,31 @@ def ode_system(t, X, *params):
 
     #calculate derivitives
     #conveniently rename the state variables
-    x = #JES MISSING CODE
-    xdot = #JES MISSING CODE
-    p1 = #JES MISSING CODE
-    p2 = #JES MISSING CODE
+    x = X[0] #JES MISSING CODE
+    xdot = X[1]#JES MISSING CODE
+    p1 =X[2] #JES MISSING CODE
+    p2 =X[3] #JES MISSING CODE
 
     #use my equations from the assignment
-    xddot = #JES MISSING CODE
-    p1dot = #JES MISSING CODE
-    p2dot = #JES MISSING CODE
+    xddot = (A * (p1 - p2) - Kvalve * xdot) / m  # Newton's second law  #JES MISSING CODE
+    p1dot = beta / V * (-A * xdot)  # Simplified pressure dynamics for p1 #JES MISSING CODE
+    p2dot = beta / V * (A * xdot)  # Simplified pressure dynamics for p2 #JES MISSING CODE
 
     #return the list of derivatives of the state variables
-    return [#JES MISSING CODE]
+    return [xdot, xddot, p1dot, p2dot]#JES MISSING CODE]
 
 def main():
     #After some trial and error, I found all the action seems to happen in the first 0.02 seconds
+    t_span = (0, 0.02)
     t=np.linspace(0,0.02,200)
     #myargs=(A, Cd, Ps, Pa, V, beta, rho, Kvalve, m, y)
     myargs=(4.909E-4, 0.6, 1.4E7,1.0E5,1.473E-4,2.0E9,850.0,2.0E-5,30, 0.002)
     #because the solution calls for x, xdot, p1 and p2, I make these the state variables X[0], X[1], X[2], X[3]
     #ic=[x=0, xdot=0, p1=pa, p2=pa]
-    pa = #JES MISSING CODE
-    ic = #JES MISSING CODE
+    pa = 1.0E5  # Atmospheric pressure #JES MISSING CODE
+    ic =[0, 0, pa, pa] #JES MISSING CODE
     #call odeint with ode_system as callback
-    sln=solve_ivp(#JES MISSING CODE)
+    sln=solve_ivp(ode_system, t_span, ic, args=myargs, t=t)#JES MISSING CODE)
 
     #unpack result into meaningful names
     xvals=sln.y[0]

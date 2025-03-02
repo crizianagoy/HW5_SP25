@@ -20,11 +20,11 @@ def ffPoint(Re, rr):
         return pta.ff(Re, rr,CBEQN=True)
     if Re<=2000:
         return pta.ff(Re, rr)
-    CBff= #JES MISSING CODE  #prediction of Colebrook Equation in Transition region
-    Lamff= #JES MISSING CODE  #prediction of Laminar Equation in Transistion region
+    CBff=pta.ff(Re, rr, CBEQN=True)  #prediction of Colebrook Equation in Transition region
+    Lamff= 64 / Re  #prediction of Laminar Equation in Transistion region
     mean=(CBff+Lamff)/2
     sig=0.2*mean
-    return #JES MISSING CODE  #use normalvariate to select a number randomly from a normal distribution
+    return rnd.normalvariate(mean, sig)#JES MISSING CODE  #use normalvariate to select a number randomly from a normal distribution
 
 def PlotPoint(Re,f):
     pta.plotMoody(plotPoint=True, pt=(Re,f))
